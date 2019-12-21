@@ -16,7 +16,7 @@ apply plugin: "idea"
 apply plugin: 'maven-publish'
 
 group "net.jutil"
-version "1.0-SNAPSHOT"
+version "1.0-2.2-RELEASE"
 
 // 指定JDK版本
 sourceCompatibility = 11
