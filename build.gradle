@@ -1,0 +1,59 @@
+buildscript {
+    ext {
+        springBootVersion = "2.2.2.RELEASE"
+    }
+    repositories {
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: "java"
+apply plugin: "idea"
+apply plugin: 'maven-publish'
+
+group "net.jutil"
+version "1.0-2.2-RELEASE"
+
+// 指定JDK版本
+sourceCompatibility = 11
+targetCompatibility = 11
+
+// 指定编码格式
+[compileJava, compileTestJava, javadoc]*.options*.encoding = "UTF-8"
+repositories {
+    maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+    mavenCentral()
+}
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-aop:$springBootVersion")
+    compile("org.springframework.boot:spring-boot-autoconfigure:$springBootVersion")
+}
+
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allJava
+    classifier "sources"
+}
+
+publishing {
+    publications {
+        maven(MavenPublication){
+            from components.java
+
+            //配置上传源码
+            artifact sourceJar
+
+        }
+    }
+}
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+
+
